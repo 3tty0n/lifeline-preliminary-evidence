@@ -1,0 +1,42 @@
+[
+ {
+  "instance": "P1_Pi_base_L3",
+  "status": "CERTIFIED"
+ },
+ {
+  "instance": "P1_Pi_hist_L3",
+  "status": "CERTIFIED"
+ },
+ {
+  "instance": "P1_Pi_base_L4",
+  "status": "CERTIFIED"
+ },
+ {
+  "instance": "P1_Pi_hist_L4",
+  "status": "REFUSED"
+ },
+ {
+  "instance": "P2_Pi_base_L3",
+  "status": "CERTIFIED"
+ },
+ {
+  "instance": "P1prime_overwrite_Pi_base_L3",
+  "status": "REFUSED"
+ },
+ {
+  "instance": "P1_Pi_hist_L3_vcOFF",
+  "status": "REFUSED"
+ },
+ {
+  "instance": "Pi_ext_first_peer_wins_L3",
+  "status": "REFUSED"
+ },
+ {
+  "instance": "P1_ThreePeer_Pi_base_L2",
+  "status": "CERTIFIED"
+ },
+ {
+  "instance": "P1_Pi_hist3_L3",
+  "status": "CERTIFIED"
+ }
+]

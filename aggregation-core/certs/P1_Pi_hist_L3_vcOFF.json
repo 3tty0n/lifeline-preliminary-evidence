@@ -1,0 +1,28 @@
+{
+ "instance": "P1_Pi_hist_L3_vcOFF",
+ "status": "REFUSED",
+ "refusal": {
+  "obligation": "soundness(atom-reconstruction)",
+  "atom": "rev:1",
+  "history": [
+   [
+    "A",
+    0
+   ],
+   [
+    "A",
+    0
+   ],
+   [
+    "A",
+    0
+   ]
+  ],
+  "reconstructed": null,
+  "true_value": [
+   1,
+   0
+  ],
+  "reason": "retained/recomputed field(s) do not reconstruct the true attribution-atom value on this history. Erasure lost information the fragment claim needs."
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "instance": "P1prime_overwrite_Pi_base_L3",
+ "status": "REFUSED",
+ "refusal": {
+  "obligation": "atom-coverage",
+  "reason": "derive_atom_requirements found no field whose position-support exactly covers a required attribution atom (pipeline erases the needed positions irrecoverably). Soundness cannot be certified.",
+  "pipeline_id": "P1_overwrite",
+  "peers": [
+   "A",
+   "B"
+  ],
+  "vmod": 3,
+  "N": 3,
+  "uncovered_atoms": [
+   {
+    "atom": "peer:A",
+    "required_positions": [
+     1,
+     2,
+     3
+    ]
+   },
+   {
+    "atom": "peer:B",
+    "required_positions": [
+     1,
+     2,
+     3
+    ]
+   }
+  ],
+  "field_supports": {
+   "events_a_head": [
+    1
+   ],
+   "events_a_tail": [
+    3
+   ],
+   "events_b": [
+    2
+   ],
+   "acc_a0": [
+    1
+   ],
+   "acc_b": [
+    2
+   ],
+   "acc_a": [
+    3
+   ],
+   "tail_sum": [
+    3
+   ],
+   "final": [
+    2,
+    3
+   ]
+  }
+ }
+}

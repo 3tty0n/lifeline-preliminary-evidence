@@ -1,0 +1,5 @@
+name = "lifeline-core"
+defaultTargets = ["LifelineCore"]
+
+[[lean_lib]]
+name = "LifelineCore"

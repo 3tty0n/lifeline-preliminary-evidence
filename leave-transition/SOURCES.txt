@@ -1,0 +1,29 @@
+# Archived files under tensorpypy/, at their paths in the public TensorPyPy repository.
+# "blob" rows: the git blob at https://github.com/3tty0n/tensorpypy commit
+# ec9f5fb09781a18916b4df5a3ef7249b64ee71b2. The archived copy is byte-identical.
+# "run" rows: run data from 2026-09-23. They are not in the public commit. The hash is
+# the git blob of the archived copy, after removal of the host name, home paths, a
+# reference to another evaluation run and a line naming an unpublished commit.
+# reproduce.sh checks every row.
+100644 blob b465523130f72526090595580e7f87e5ff816055	benchmark/applevel/leave_probe.py
+100755 blob 4d0bd3c67768beb3e9b37012b451282413f32421	benchmark/eval/archive.sh
+100644 blob c33a2293c3c21d171d4e1218b6aaa8560b5f246e	benchmark/eval/audit_rules.py
+100644 blob e3df0f1a77935f8ffdc0f461edf2e24f40cd61e6	benchmark/eval/run_leave.sh
+100644 blob 675a7898e4d9561a0d4f468e10b36933ca7f39a9	benchmark/motion/adapter_leave.py
+100644 blob 7445e4ecedd81e7d69007787ad72716507860675	benchmark/motion/check_leave.py
+100644 blob 7f0e6e718f8dfc585ad229241235d7d4a7e404b8	benchmark/motion/count_lines.py
+100644 blob d3b9cfa6931ef96202bdd6c750c7349da6b66469	benchmark/motion/rule_leave_leaky.py
+100644 blob 43616c04e08f0ab97bb137b94fb48e08e79d63e9	benchmark/motion/rule_leave.provenance
+100644 run 7f250bf2e268a3dec32719cfaa290927308e8c43	benchmark/results/rtx3090/motion-2026-09-23/data.tar.gz
+100644 run 4e91140ee30f1f58e557564eb1da0378b7f2a777	benchmark/results/rtx3090/motion-2026-09-23/figures/motion.pdf
+100644 run d87268facab5a09accd3c1edd32b5e50d191eda7	benchmark/results/rtx3090/motion-2026-09-23/figures/motion_retention.pdf
+100644 run 3eeb63ce78780624d91dde68802414ca0b763542	benchmark/results/rtx3090/motion-2026-09-23/figures/motion.tex
+100644 run 7c94f216186913c6e744cbfad4403ba45192d2a3	benchmark/results/rtx3090/motion-2026-09-23/machine.txt
+100644 run 1411f5936b63e938d3d249fd3e352fe3b1a6b04b	benchmark/results/rtx3090/motion-2026-09-23/summary.md
+100644 blob 8173a56d5053bf2b6cc60c36bbdac48f50a0820d	LICENSE
+100644 blob e4e3ba3046b6348f70af1f92f73e1e5f462f8089	LICENSE-tensorpypy
+100644 blob abddf3dde5aa57b759b47ed1507aa46d76387f7b	pypy/module/_metatensor/interp_group.py
+100644 blob 8a3105d9c069a20db06e546334c5dfdd8432437d	pypy/module/_metatensor/moduledef.py
+100644 blob 746b24ac65875b6cd2f329b8d13a999416fce443	pypy/module/_metatensor/motion_iface.py
+100644 blob e0658477a3d35cf084796f19d7b230eccb337c90	pypy/module/_metatensor/rule_leave.py
+100644 blob d3559679641c8255622a2bf624c3a3776a212235	pypy/module/_metatensor/test/test_group_jit.py

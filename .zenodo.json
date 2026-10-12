@@ -1,0 +1,15 @@
+{
+  "title": "LIFELINE preliminary evidence: a derived aggregation-core congruence and a leave transition generated from a change rule in MetaTensor",
+  "upload_type": "software",
+  "version": "1.0.0",
+  "publication_date": "2026-10-12",
+  "creators": [
+    {"name": "Izawa, Yusuke", "affiliation": "Tokyo Metropolitan University"}
+  ],
+  "description": "<p>Preliminary evidence for the ERC proposal LIFELINE (PI Yusuke Izawa), in two parts.</p><p><b>aggregation-core/</b> (cited as izawa2026artifact): a stand-alone model of an aggregation core in which two peers' contributions are summed, optimisations combine and a peer may leave. From declared promises alone, the implementation derives a partition that separates exactly the histories a later change can tell apart, over every history of up to three steps (79 classes when the promise depends on event order, 9 when it does not). An exhaustive search that does not use the derivation confirms it, and a separately written checker accepts the certificates and rejects empty or truncated ones.</p><p><b>leave-transition/</b> (cited as izawa2026leave): the LIFELINE-specific sources from TensorPyPy (https://github.com/3tty0n/tensorpypy, commit ec9f5fb09781a18916b4df5a3ef7249b64ee71b2) and the run data of 2026-09-23. A 7-line change rule leave(p, reason), written against an abstract vocabulary only, is compiled by MetaTensor's meta-tracer. The archived rows show agreement with an independent checker and an interpreter-only run on five histories, two broken variants caught, and 1.16 GPU launches per step against 5.00 for a hand-written adapter (NVIDIA RTX 3090).</p><p>reproduce.sh reruns the first part and re-derives every number of the second from the archived data (Python 3.12+, standard library only, no GPU). The Python evidence is bounded and per-instance. Lean 4 proofs in aggregation-core/lean/ show, for the order-independent case only, that per-peer sums are enough and irredundant for histories of any length. The derivation itself and the order-dependent case are not proved.</p>",
+  "license": "MIT",
+  "keywords": ["meta-tracing", "dynamic reconfiguration", "program transformation", "compositional congruence", "GPU", "PyPy"],
+  "related_identifiers": [
+    {"identifier": "10.5281/zenodo.23298877", "relation": "references", "resource_type": "publication-preprint", "scheme": "doi"}
+  ]
+}

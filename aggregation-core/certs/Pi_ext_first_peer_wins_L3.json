@@ -1,0 +1,23 @@
+{
+ "instance": "Pi_ext_first_peer_wins_L3",
+ "status": "REFUSED",
+ "refusal": {
+  "obligation": "declaration(fold_M-of-fixed-filter)",
+  "reason": "first_peer_wins reads seq[0]'s peer before filtering. Its selection predicate is a function of the whole history, not a fixed phi(peer,revision). It cannot be written as a PolicyDecl, so no atom set can be derived for it."
+ },
+ "witness": {
+  "h1": [
+   [
+    "A",
+    0
+   ]
+  ],
+  "h2": [
+   [
+    "B",
+    0
+   ]
+  ],
+  "note": "Pi_hist's own certified atom-vector is equal on h1,h2 (sound+complete for Pi_hist) but first_peer_wins separates them under some continuation. The fragment's construction cannot represent this policy."
+ }
+}

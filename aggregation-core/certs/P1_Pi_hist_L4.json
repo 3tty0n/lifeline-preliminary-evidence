@@ -1,0 +1,55 @@
+{
+ "instance": "P1_Pi_hist_L4",
+ "status": "REFUSED",
+ "refusal": {
+  "obligation": "atom-coverage",
+  "reason": "derive_atom_requirements found no field whose position-support exactly covers a required attribution atom (pipeline erases the needed positions irrecoverably). Soundness cannot be certified.",
+  "pipeline_id": "P1_add",
+  "peers": [
+   "A",
+   "B"
+  ],
+  "vmod": 3,
+  "N": 4,
+  "uncovered_atoms": [
+   {
+    "atom": "rev:2",
+    "required_positions": [
+     2
+    ]
+   }
+  ],
+  "field_supports": {
+   "events_a_head": [
+    1
+   ],
+   "events_a_tail": [
+    3
+   ],
+   "events_b": [
+    2,
+    4
+   ],
+   "acc_a0": [
+    1
+   ],
+   "acc_b": [
+    2,
+    4
+   ],
+   "acc_a": [
+    1,
+    3
+   ],
+   "tail_sum": [
+    3
+   ],
+   "final": [
+    1,
+    2,
+    3,
+    4
+   ]
+  }
+ }
+}

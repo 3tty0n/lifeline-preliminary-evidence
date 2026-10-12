@@ -1,0 +1,296 @@
+# Role of every line count_lines.py counts, at tensorpypy ec9f5fb.
+# side M = MOTION, A = hand-written adapter. sub=keep marks the keep decision.
+side	file	line	role	sub	text
+M	pypy/module/_metatensor/rule_leave.py	8	D		from pypy.module._metatensor.motion_iface import REVOKE
+M	pypy/module/_metatensor/rule_leave.py	11	D		def leave(group, pending, p, reason):
+M	pypy/module/_metatensor/rule_leave.py	12	D		group.drop_member(p)
+M	pypy/module/_metatensor/rule_leave.py	13	D		action = group.action(reason)
+M	pypy/module/_metatensor/rule_leave.py	14	D		if action == REVOKE:
+M	pypy/module/_metatensor/rule_leave.py	15	D		for uncommitted in pending:
+M	pypy/module/_metatensor/rule_leave.py	16	D		uncommitted.exclude(p)
+M	pypy/module/_metatensor/motion_iface.py	8	D		from pypy.interpreter.baseobjspace import W_Root
+M	pypy/module/_metatensor/motion_iface.py	10	D		RETAIN = 'retain'
+M	pypy/module/_metatensor/motion_iface.py	11	D		REVOKE = 'revoke'
+M	pypy/module/_metatensor/motion_iface.py	14	D		class Membership(W_Root):
+M	pypy/module/_metatensor/motion_iface.py	17	D		def drop_member(self, p):
+M	pypy/module/_metatensor/motion_iface.py	19	D		raise NotImplementedError
+M	pypy/module/_metatensor/motion_iface.py	21	D		def action(self, reason):
+M	pypy/module/_metatensor/motion_iface.py	23	D		raise NotImplementedError
+M	pypy/module/_metatensor/motion_iface.py	26	D		class Uncommitted(W_Root):
+M	pypy/module/_metatensor/motion_iface.py	29	D		def exclude(self, p):
+M	pypy/module/_metatensor/motion_iface.py	31	D		raise NotImplementedError
+M	pypy/module/_metatensor/interp_group.py	7	C		import os
+M	pypy/module/_metatensor/interp_group.py	9	E:A		from rpython.rlib import jit
+M	pypy/module/_metatensor/interp_group.py	10	B:A		from pypy.interpreter.error import oefmt
+M	pypy/module/_metatensor/interp_group.py	11	B:A		from pypy.interpreter.gateway import interp2app, unwrap_spec
+M	pypy/module/_metatensor/interp_group.py	12	B:A		from pypy.interpreter.typedef import TypeDef
+M	pypy/module/_metatensor/interp_group.py	13	A		from rpython.metatensor import nn, ops, runtime
+M	pypy/module/_metatensor/interp_group.py	14	D		from pypy.module._metatensor.motion_iface import (Membership, Uncommit
+M	pypy/module/_metatensor/interp_group.py	15	D		RETAIN, REVOKE)
+M	pypy/module/_metatensor/interp_group.py	16	D		from pypy.module._metatensor import rule_leave
+M	pypy/module/_metatensor/interp_group.py	17	B:A		from pypy.module._metatensor.interp_tensor import W_Tensor
+M	pypy/module/_metatensor/interp_group.py	20	C		def _env_set(name):
+M	pypy/module/_metatensor/interp_group.py	21	C		v = os.environ.get(name)
+M	pypy/module/_metatensor/interp_group.py	22	C		return v is not None and v != '' and v != '0'
+M	pypy/module/_metatensor/interp_group.py	25	D		def _without(names, p):
+M	pypy/module/_metatensor/interp_group.py	27	D		k = 0
+M	pypy/module/_metatensor/interp_group.py	28	D		for n in names:
+M	pypy/module/_metatensor/interp_group.py	29	D		if n != p:
+M	pypy/module/_metatensor/interp_group.py	30	D		k += 1
+M	pypy/module/_metatensor/interp_group.py	31	D		out = [''] * k
+M	pypy/module/_metatensor/interp_group.py	32	D		j = 0
+M	pypy/module/_metatensor/interp_group.py	33	D		for n in names:
+M	pypy/module/_metatensor/interp_group.py	34	D		if n != p:
+M	pypy/module/_metatensor/interp_group.py	35	D		out[j] = n
+M	pypy/module/_metatensor/interp_group.py	36	D		j += 1
+M	pypy/module/_metatensor/interp_group.py	37	D		return out
+M	pypy/module/_metatensor/interp_group.py	40	D		class Part(object):
+M	pypy/module/_metatensor/interp_group.py	41	E:D		_immutable_fields_ = ['p', 't', 'next']
+M	pypy/module/_metatensor/interp_group.py	43	D		def __init__(self, p, t, next):
+M	pypy/module/_metatensor/interp_group.py	44	D		self.p = p
+M	pypy/module/_metatensor/interp_group.py	45	D		self.t = t
+M	pypy/module/_metatensor/interp_group.py	46	D		self.next = next
+M	pypy/module/_metatensor/interp_group.py	49	A		class W_Group(Membership):
+M	pypy/module/_metatensor/interp_group.py	50	E:D		_immutable_fields_ = ['names?[*]', 'version?', 'retains?', 'erase',
+M	pypy/module/_metatensor/interp_group.py	51	E:D		'late']
+M	pypy/module/_metatensor/interp_group.py	53	A		def __init__(self, names):
+M	pypy/module/_metatensor/interp_group.py	54	A		self.names = _without(names, None)
+M	pypy/module/_metatensor/interp_group.py	55	D		self.version = 0
+M	pypy/module/_metatensor/interp_group.py	56	D		self.retains = False
+M	pypy/module/_metatensor/interp_group.py	57	D		self.reasons = []
+M	pypy/module/_metatensor/interp_group.py	58	D		self.actions = []
+M	pypy/module/_metatensor/interp_group.py	63	D		self.notices_p = []
+M	pypy/module/_metatensor/interp_group.py	64	D		self.notices_reason = []
+M	pypy/module/_metatensor/interp_group.py	65	C		self.log = []
+M	pypy/module/_metatensor/interp_group.py	66	C		self.commits = 0
+M	pypy/module/_metatensor/interp_group.py	67	C		self.erase = _env_set('MOTION_ERASE')
+M	pypy/module/_metatensor/interp_group.py	68	C		self.late = os.environ.get('MOTION_ORDER') == 'late'
+M	pypy/module/_metatensor/interp_group.py	72	D		def drop_member(self, p):
+M	pypy/module/_metatensor/interp_group.py	73	D		names = _without(self.names, p)
+M	pypy/module/_metatensor/interp_group.py	74	D		if len(names) != len(self.names):
+M	pypy/module/_metatensor/interp_group.py	75	D		self.names = names
+M	pypy/module/_metatensor/interp_group.py	76	D		self.version += 1
+M	pypy/module/_metatensor/interp_group.py	78	D		def action(self, reason):
+M	pypy/module/_metatensor/interp_group.py	79	D		for i in range(len(self.reasons)):
+M	pypy/module/_metatensor/interp_group.py	80	D		if self.reasons[i] == reason:
+M	pypy/module/_metatensor/interp_group.py	81	D		return self.actions[i]
+M	pypy/module/_metatensor/interp_group.py	82	D		return RETAIN
+M	pypy/module/_metatensor/interp_group.py	86	E:A		@jit.unroll_safe
+M	pypy/module/_metatensor/interp_group.py	87	A		def is_member(self, p):
+M	pypy/module/_metatensor/interp_group.py	88	A		for n in self.names:
+M	pypy/module/_metatensor/interp_group.py	89	A		if n == p:
+M	pypy/module/_metatensor/interp_group.py	90	A		return True
+M	pypy/module/_metatensor/interp_group.py	91	A		return False
+M	pypy/module/_metatensor/interp_group.py	104	D	keep	def _derive_retention(self):
+M	pypy/module/_metatensor/interp_group.py	105	D	keep	live = False
+M	pypy/module/_metatensor/interp_group.py	106	D	keep	for r in self.reasons:
+M	pypy/module/_metatensor/interp_group.py	107	D	keep	probe = _ReadSet()
+M	pypy/module/_metatensor/interp_group.py	108	D	keep	rule_leave.leave(_PolicyOnly(self), [probe], '?', r)
+M	pypy/module/_metatensor/interp_group.py	109	D	keep	if probe.read:
+M	pypy/module/_metatensor/interp_group.py	110	D	keep	live = True
+M	pypy/module/_metatensor/interp_group.py	111	D	keep	self.retains = live and not self.erase
+M	pypy/module/_metatensor/interp_group.py	115	D		def declare(self, reason, action):
+M	pypy/module/_metatensor/interp_group.py	116	D		self.reasons.append(reason)
+M	pypy/module/_metatensor/interp_group.py	117	D		self.actions.append(action)
+M	pypy/module/_metatensor/interp_group.py	118	D	keep	self._derive_retention()
+M	pypy/module/_metatensor/interp_group.py	120	B:D		@unwrap_spec(reason='text', action='text')
+M	pypy/module/_metatensor/interp_group.py	121	B:D		def descr_declare(self, space, reason, action):
+M	pypy/module/_metatensor/interp_group.py	122	B:D		if action != RETAIN and action != REVOKE:
+M	pypy/module/_metatensor/interp_group.py	123	B:D		raise oefmt(space.w_ValueError, "action must be retain or revoke")
+M	pypy/module/_metatensor/interp_group.py	124	B:D		self.declare(reason, action)
+M	pypy/module/_metatensor/interp_group.py	135	A		def aggregate(self):
+M	pypy/module/_metatensor/interp_group.py	136	A		return W_Aggregate(self)
+M	pypy/module/_metatensor/interp_group.py	138	B:A		def descr_aggregate(self, space):
+M	pypy/module/_metatensor/interp_group.py	139	B:A		return self.aggregate()
+M	pypy/module/_metatensor/interp_group.py	141	B:A		@unwrap_spec(p='text')
+M	pypy/module/_metatensor/interp_group.py	142	B:A		def descr_is_member(self, space, p):
+M	pypy/module/_metatensor/interp_group.py	143	B:A		return space.newbool(self.is_member(p))
+M	pypy/module/_metatensor/interp_group.py	145	A		def commit(self, agg, w, lr):
+M	pypy/module/_metatensor/interp_group.py	147	C		if self.late:
+M	pypy/module/_metatensor/interp_group.py	148	C		value = agg.value()
+M	pypy/module/_metatensor/interp_group.py	149	C		agg.sync()
+M	pypy/module/_metatensor/interp_group.py	150	C		else:
+M	pypy/module/_metatensor/interp_group.py	151	D		agg.sync()
+M	pypy/module/_metatensor/interp_group.py	152	A		value = agg.value()
+M	pypy/module/_metatensor/interp_group.py	153	D		agg.parts = None
+M	pypy/module/_metatensor/interp_group.py	154	A		agg.total = None
+M	pypy/module/_metatensor/interp_group.py	155	A		agg.committed = True
+M	pypy/module/_metatensor/interp_group.py	156	C		self.commits += 1
+M	pypy/module/_metatensor/interp_group.py	157	A		if value is None:
+M	pypy/module/_metatensor/interp_group.py	158	A		return w
+M	pypy/module/_metatensor/interp_group.py	159	A		step = nn.Tensor(runtime.scalar_of(jit.promote(lr),
+M	pypy/module/_metatensor/interp_group.py	160	A		ops.tensor_dtype(w.t)))
+M	pypy/module/_metatensor/interp_group.py	161	A		return w.sub(value.mul(step))
+M	pypy/module/_metatensor/interp_group.py	163	B:A		@unwrap_spec(lr=float)
+M	pypy/module/_metatensor/interp_group.py	164	B:A		def descr_commit(self, space, w_agg, w_w, lr):
+M	pypy/module/_metatensor/interp_group.py	165	B:A		agg = space.interp_w(W_Aggregate, w_agg)
+M	pypy/module/_metatensor/interp_group.py	166	B:A		if agg.committed:
+M	pypy/module/_metatensor/interp_group.py	167	B:A		raise oefmt(space.w_ValueError, "aggregate already committed")
+M	pypy/module/_metatensor/interp_group.py	168	B:A		w = space.interp_w(W_Tensor, w_w).tensor
+M	pypy/module/_metatensor/interp_group.py	169	B:A		return W_Tensor(self.commit(agg, w, lr))
+M	pypy/module/_metatensor/interp_group.py	171	B:C		def descr_retains(self, space):
+M	pypy/module/_metatensor/interp_group.py	172	B:C		return space.newbool(self.retains)
+M	pypy/module/_metatensor/interp_group.py	174	B:C		def descr_commits(self, space):
+M	pypy/module/_metatensor/interp_group.py	175	B:C		return space.newint(self.commits)
+M	pypy/module/_metatensor/interp_group.py	177	B:C		def descr_log(self, space):
+M	pypy/module/_metatensor/interp_group.py	178	B:C		return space.newlist([space.newtext(s) for s in self.log])
+M	pypy/module/_metatensor/interp_group.py	181	D	keep	class _PolicyOnly(Membership):
+M	pypy/module/_metatensor/interp_group.py	184	D	keep	def __init__(self, group):
+M	pypy/module/_metatensor/interp_group.py	185	D	keep	self.group = group
+M	pypy/module/_metatensor/interp_group.py	187	D	keep	def drop_member(self, p):
+M	pypy/module/_metatensor/interp_group.py	188	D	keep	pass
+M	pypy/module/_metatensor/interp_group.py	190	D	keep	def action(self, reason):
+M	pypy/module/_metatensor/interp_group.py	191	D	keep	return self.group.action(reason)
+M	pypy/module/_metatensor/interp_group.py	194	D	keep	class _ReadSet(Uncommitted):
+M	pypy/module/_metatensor/interp_group.py	197	D	keep	def __init__(self):
+M	pypy/module/_metatensor/interp_group.py	198	D	keep	self.read = False
+M	pypy/module/_metatensor/interp_group.py	200	D	keep	def exclude(self, p):
+M	pypy/module/_metatensor/interp_group.py	201	D	keep	self.read = True
+M	pypy/module/_metatensor/interp_group.py	204	A		class W_Aggregate(Uncommitted):
+M	pypy/module/_metatensor/interp_group.py	205	A		def __init__(self, group):
+M	pypy/module/_metatensor/interp_group.py	207	E:D		group = jit.promote(group)
+M	pypy/module/_metatensor/interp_group.py	208	A		self.group = group
+M	pypy/module/_metatensor/interp_group.py	209	D		self.seen = group.version
+M	pypy/module/_metatensor/interp_group.py	210	D		self.parts = None
+M	pypy/module/_metatensor/interp_group.py	211	A		self.total = None
+M	pypy/module/_metatensor/interp_group.py	212	D		self.excluded = False
+M	pypy/module/_metatensor/interp_group.py	213	A		self.committed = False
+M	pypy/module/_metatensor/interp_group.py	215	D		def exclude(self, p):
+M	pypy/module/_metatensor/interp_group.py	216	D		kept = []
+M	pypy/module/_metatensor/interp_group.py	217	D		removed = False
+M	pypy/module/_metatensor/interp_group.py	218	D		cur = self.parts
+M	pypy/module/_metatensor/interp_group.py	219	D		while cur is not None:
+M	pypy/module/_metatensor/interp_group.py	220	D		if cur.p == p:
+M	pypy/module/_metatensor/interp_group.py	221	D		removed = True
+M	pypy/module/_metatensor/interp_group.py	222	D		else:
+M	pypy/module/_metatensor/interp_group.py	223	D		kept.append(cur)
+M	pypy/module/_metatensor/interp_group.py	224	D		cur = cur.next
+M	pypy/module/_metatensor/interp_group.py	225	D		if not removed:
+M	pypy/module/_metatensor/interp_group.py	226	D		return
+M	pypy/module/_metatensor/interp_group.py	227	D		parts = None
+M	pypy/module/_metatensor/interp_group.py	228	D		for i in range(len(kept) - 1, -1, -1):
+M	pypy/module/_metatensor/interp_group.py	229	D		parts = Part(kept[i].p, kept[i].t, parts)
+M	pypy/module/_metatensor/interp_group.py	230	D		self.parts = parts
+M	pypy/module/_metatensor/interp_group.py	231	D		self.excluded = True
+M	pypy/module/_metatensor/interp_group.py	232	C		self.group.log.append('revoke %s' % p)
+M	pypy/module/_metatensor/interp_group.py	234	D		def sync(self):
+M	pypy/module/_metatensor/interp_group.py	236	E:D		g = jit.promote(self.group)
+M	pypy/module/_metatensor/interp_group.py	237	D		g.poll()
+M	pypy/module/_metatensor/interp_group.py	238	D		if g.version != self.seen:
+M	pypy/module/_metatensor/interp_group.py	239	D		self._apply_notices()
+M	pypy/module/_metatensor/interp_group.py	241	D		def _apply_notices(self):
+M	pypy/module/_metatensor/interp_group.py	242	D		g = self.group
+M	pypy/module/_metatensor/interp_group.py	243	D		ps = g.notices_p
+M	pypy/module/_metatensor/interp_group.py	244	D		reasons = g.notices_reason
+M	pypy/module/_metatensor/interp_group.py	245	D		g.notices_p = []
+M	pypy/module/_metatensor/interp_group.py	246	D		g.notices_reason = []
+M	pypy/module/_metatensor/interp_group.py	247	D		for i in range(len(ps)):
+M	pypy/module/_metatensor/interp_group.py	248	C		g.log.append('leave %s %s' % (ps[i], reasons[i]))
+M	pypy/module/_metatensor/interp_group.py	249	D		rule_leave.leave(g, [self], ps[i], reasons[i])
+M	pypy/module/_metatensor/interp_group.py	250	D		self.seen = g.version
+M	pypy/module/_metatensor/interp_group.py	252	D		def value(self):
+M	pypy/module/_metatensor/interp_group.py	254	D		if not self.excluded:
+M	pypy/module/_metatensor/interp_group.py	255	A		return self.total
+M	pypy/module/_metatensor/interp_group.py	256	D		return self._rebuild()
+M	pypy/module/_metatensor/interp_group.py	258	D		def _rebuild(self):
+M	pypy/module/_metatensor/interp_group.py	261	D		order = []
+M	pypy/module/_metatensor/interp_group.py	262	D		cur = self.parts
+M	pypy/module/_metatensor/interp_group.py	263	D		while cur is not None:
+M	pypy/module/_metatensor/interp_group.py	264	D		order.append(cur.t)
+M	pypy/module/_metatensor/interp_group.py	265	D		cur = cur.next
+M	pypy/module/_metatensor/interp_group.py	266	D		acc = None
+M	pypy/module/_metatensor/interp_group.py	267	D		for i in range(len(order) - 1, -1, -1):
+M	pypy/module/_metatensor/interp_group.py	268	D		if acc is None:
+M	pypy/module/_metatensor/interp_group.py	269	D		acc = order[i]
+M	pypy/module/_metatensor/interp_group.py	270	D		else:
+M	pypy/module/_metatensor/interp_group.py	271	D		acc = acc.add(order[i])
+M	pypy/module/_metatensor/interp_group.py	272	D		return acc
+M	pypy/module/_metatensor/interp_group.py	274	A		def contribute(self, p, t):
+M	pypy/module/_metatensor/interp_group.py	275	E:A		g = jit.promote(self.group)
+M	pypy/module/_metatensor/interp_group.py	276	A		if not g.is_member(p):
+M	pypy/module/_metatensor/interp_group.py	277	A		return False
+M	pypy/module/_metatensor/interp_group.py	278	D		if g.retains:
+M	pypy/module/_metatensor/interp_group.py	279	D		self.parts = Part(p, t, self.parts)
+M	pypy/module/_metatensor/interp_group.py	280	A		if self.total is None:
+M	pypy/module/_metatensor/interp_group.py	281	A		self.total = t
+M	pypy/module/_metatensor/interp_group.py	282	A		else:
+M	pypy/module/_metatensor/interp_group.py	283	A		self.total = self.total.add(t)
+M	pypy/module/_metatensor/interp_group.py	284	A		return True
+M	pypy/module/_metatensor/interp_group.py	286	B:A		@unwrap_spec(p='text')
+M	pypy/module/_metatensor/interp_group.py	287	B:A		def descr_contribute(self, space, p, w_t):
+M	pypy/module/_metatensor/interp_group.py	288	B:A		if self.committed:
+M	pypy/module/_metatensor/interp_group.py	289	B:A		raise oefmt(space.w_ValueError, "aggregate already committed")
+M	pypy/module/_metatensor/interp_group.py	290	B:A		t = space.interp_w(W_Tensor, w_t).tensor
+M	pypy/module/_metatensor/interp_group.py	291	B:A		return space.newbool(self.contribute(p, t))
+M	pypy/module/_metatensor/interp_group.py	293	B:D		def descr_sync(self, space):
+M	pypy/module/_metatensor/interp_group.py	294	B:D		self.sync()
+M	pypy/module/_metatensor/interp_group.py	297	B:A		def new_group(space, w_names):
+M	pypy/module/_metatensor/interp_group.py	298	B:A		names = [space.text_w(w) for w in space.listview(w_names)]
+M	pypy/module/_metatensor/interp_group.py	299	B:A		return W_Group(names)
+M	pypy/module/_metatensor/interp_group.py	302	B:A		W_Group.typedef = TypeDef(
+M	pypy/module/_metatensor/interp_group.py	303	B:A		'_metatensor.Group',
+M	pypy/module/_metatensor/interp_group.py	304	B:D		declare=interp2app(W_Group.descr_declare),
+M	pypy/module/_metatensor/interp_group.py	305	B:H		arm=interp2app(W_Group.descr_arm),
+M	pypy/module/_metatensor/interp_group.py	306	B:A		aggregate=interp2app(W_Group.descr_aggregate),
+M	pypy/module/_metatensor/interp_group.py	307	B:A		is_member=interp2app(W_Group.descr_is_member),
+M	pypy/module/_metatensor/interp_group.py	308	B:A		commit=interp2app(W_Group.descr_commit),
+M	pypy/module/_metatensor/interp_group.py	309	B:C		retains=interp2app(W_Group.descr_retains),
+M	pypy/module/_metatensor/interp_group.py	310	B:C		commits=interp2app(W_Group.descr_commits),
+M	pypy/module/_metatensor/interp_group.py	311	B:C		log=interp2app(W_Group.descr_log),
+M	pypy/module/_metatensor/interp_group.py	312	B:A		)
+M	pypy/module/_metatensor/interp_group.py	314	B:A		W_Aggregate.typedef = TypeDef(
+M	pypy/module/_metatensor/interp_group.py	315	B:A		'_metatensor.Aggregate',
+M	pypy/module/_metatensor/interp_group.py	316	B:A		contribute=interp2app(W_Aggregate.descr_contribute),
+M	pypy/module/_metatensor/interp_group.py	317	B:D		sync=interp2app(W_Aggregate.descr_sync),
+M	pypy/module/_metatensor/interp_group.py	318	B:A		)
+M	pypy/module/_metatensor/moduledef.py	35	B:A		'group': 'interp_group.new_group',  # [motion]
+M	benchmark/applevel/leave_probe.py	34	D		POLICY = [('preempt', 'retain'), ('fault', 'revoke')]  # [policy]
+M	benchmark/applevel/leave_probe.py	90	D		for reason, action in policy:  # [motion-policy]
+M	benchmark/applevel/leave_probe.py	91	D		g.declare(reason, action)  # [motion-policy]
+A	benchmark/motion/adapter_leave.py	37	A		class ManualAggregator(object):
+A	benchmark/motion/adapter_leave.py	38	A		def __init__(self, members, policy, channel):
+A	benchmark/motion/adapter_leave.py	39	A		self.members = list(members)
+A	benchmark/motion/adapter_leave.py	40	D		self.policy = dict(policy)
+A	benchmark/motion/adapter_leave.py	41	D		self.channel = channel
+A	benchmark/motion/adapter_leave.py	42	D		self.step = 0
+A	benchmark/motion/adapter_leave.py	43	D		self.log = {}
+A	benchmark/motion/adapter_leave.py	44	D		self.order = []
+A	benchmark/motion/adapter_leave.py	45	C		self.events = []
+A	benchmark/motion/adapter_leave.py	46	C		self.commits = 0
+A	benchmark/motion/adapter_leave.py	48	D		def begin(self, step):
+A	benchmark/motion/adapter_leave.py	49	D		self.step = step
+A	benchmark/motion/adapter_leave.py	50	D		self.log = {}
+A	benchmark/motion/adapter_leave.py	51	D		self.order = []
+A	benchmark/motion/adapter_leave.py	53	D		def check(self):
+A	benchmark/motion/adapter_leave.py	54	D		for p, reason in self.channel.poll():
+A	benchmark/motion/adapter_leave.py	55	C		self.events.append('leave %s %s' % (p, reason))
+A	benchmark/motion/adapter_leave.py	56	D		if p in self.members:
+A	benchmark/motion/adapter_leave.py	57	D		self.members.remove(p)
+A	benchmark/motion/adapter_leave.py	58	D		if self.policy.get(reason, 'retain') == 'revoke':
+A	benchmark/motion/adapter_leave.py	59	D		keys = [k for k in self.order if k[1] == p]
+A	benchmark/motion/adapter_leave.py	60	D		for k in keys:
+A	benchmark/motion/adapter_leave.py	61	D		del self.log[k]
+A	benchmark/motion/adapter_leave.py	62	D		self.order.remove(k)
+A	benchmark/motion/adapter_leave.py	63	C		if keys:
+A	benchmark/motion/adapter_leave.py	64	C		self.events.append('revoke %s' % p)
+A	benchmark/motion/adapter_leave.py	66	A		def contribute(self, p, g):
+A	benchmark/motion/adapter_leave.py	67	A		if p not in self.members:
+A	benchmark/motion/adapter_leave.py	68	A		return False
+A	benchmark/motion/adapter_leave.py	69	D		key = (self.step, p)
+A	benchmark/motion/adapter_leave.py	70	D		if key in self.log:
+A	benchmark/motion/adapter_leave.py	71	D		return True
+A	benchmark/motion/adapter_leave.py	72	D		self.log[key] = g.force()
+A	benchmark/motion/adapter_leave.py	73	D		self.order.append(key)
+A	benchmark/motion/adapter_leave.py	74	A		return True
+A	benchmark/motion/adapter_leave.py	76	A		def commit(self, w, lr):
+A	benchmark/motion/adapter_leave.py	77	D		self.check()
+A	benchmark/motion/adapter_leave.py	78	A		total = None
+A	benchmark/motion/adapter_leave.py	79	A		for k in self.order:
+A	benchmark/motion/adapter_leave.py	80	A		total = self.log[k] if total is None else total + self.log[k]
+A	benchmark/motion/adapter_leave.py	81	D		self.log = {}
+A	benchmark/motion/adapter_leave.py	82	D		self.order = []
+A	benchmark/motion/adapter_leave.py	83	C		self.commits += 1
+A	benchmark/motion/adapter_leave.py	84	A		if total is None:
+A	benchmark/motion/adapter_leave.py	85	A		return w
+A	benchmark/motion/adapter_leave.py	86	A		return w - total * lr
+A	benchmark/applevel/leave_probe.py	34	D		POLICY = [('preempt', 'retain'), ('fault', 'revoke')]  # [policy]

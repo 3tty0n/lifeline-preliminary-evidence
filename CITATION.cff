@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: "If you use this archive, please cite it as below."
+type: software
+title: "LIFELINE preliminary evidence: a derived aggregation-core congruence and a leave transition generated from a change rule in MetaTensor"
+version: "1.0.0"
+date-released: "2026-10-12"
+license: MIT
+authors:
+  - family-names: Izawa
+    given-names: Yusuke
+    affiliation: Tokyo Metropolitan University
+abstract: >-
+  Preliminary evidence for the ERC proposal LIFELINE. (A) A stand-alone model
+  of an aggregation core derives, from declared promises alone, the coarsest
+  partition of histories that a later change can tell apart (79 classes for an
+  order-dependent promise, 9 otherwise, over all histories of up to three
+  steps), confirmed by exhaustive search and by a separately written
+  certificate checker. Lean 4 proofs cover the order-independent case for
+  histories of any length. (B) In MetaTensor, a 7-line change rule
+  leave(p, reason) is compiled by the meta-tracer. The archived run data and
+  scripts re-derive
+  its agreement with an independent checker on five histories and its 1.16
+  GPU launches per step against 5.00 for a hand-written adapter.
+keywords:
+  - meta-tracing
+  - dynamic reconfiguration
+  - program transformation
+  - compositional congruence
+  - GPU
+references:
+  - type: generic
+    title: "MetaTensor: Tensor Fusion in a Meta-Tracing Compiler"
+    year: 2026
+    authors:
+      - family-names: Izawa
+        given-names: Yusuke
+    doi: "10.5281/zenodo.23298877"
+  - type: software
+    title: "TensorPyPy"
+    authors:
+      - family-names: Izawa
+        given-names: Yusuke
+    repository-code: "https://github.com/3tty0n/tensorpypy"
+    commit: "ec9f5fb09781a18916b4df5a3ef7249b64ee71b2"
